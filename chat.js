@@ -1,7 +1,7 @@
 (function () {
   // ============ PARTE PARA EDITAR ============
   // Endereço do seu Worker (copie do painel da Cloudflare, sem barra no final)
-  const API = "https://agente-vendas.SEU-SUBDOMINIO.workers.dev";
+  const API = "https://kodex.marcellylemez.workers.dev";
   const TITULO = "Kodex Soluções • Tire suas dúvidas";
   const SAUDACAO = "Olá! Sou o assistente da Kodex Soluções. Posso te ajudar com sites, sistemas, automações e soluções com IA. Como posso ajudar?";
   const WHATSAPP = "https://wa.me/5511941599287";
