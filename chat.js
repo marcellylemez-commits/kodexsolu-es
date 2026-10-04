@@ -4,7 +4,7 @@
   const API = "https://agente-vendas.SEU-SUBDOMINIO.workers.dev";
   const TITULO = "Kodex Soluções • Tire suas dúvidas";
   const SAUDACAO = "Olá! Sou o assistente da Kodex Soluções. Posso te ajudar com sites, sistemas, automações e soluções com IA. Como posso ajudar?";
-  const WHATSAPP = "https://wa.me/5519995975756";
+  const WHATSAPP = "https://wa.me/5511941599287";
 
   // Paleta oficial da Kodex (manual da marca)
   const CORES = {
