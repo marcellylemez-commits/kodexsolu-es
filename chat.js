@@ -27,11 +27,11 @@
 
   const css = document.createElement("style");
   css.textContent = `
-    #cv-btn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;
+    #cv-btn{position:fixed;bottom:84px;right:20px;width:60px;height:60px;border-radius:50%;
       border:3px solid ${C.destaque};background:${C.principal};color:${C.textoSobrePrincipal};
       font-size:26px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.35);z-index:9999}
     #cv-btn:focus-visible{outline:3px solid ${C.destaque};outline-offset:3px}
-    #cv-box{position:fixed;bottom:90px;right:20px;width:340px;max-width:calc(100vw - 40px);
+    #cv-box{position:fixed;bottom:154px;right:20px;width:340px;max-width:calc(100vw - 40px);
       height:460px;max-height:calc(100vh - 110px);background:${C.fundo};color:${C.texto};
       border:1px solid ${C.borda};border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.3);
       display:none;flex-direction:column;overflow:hidden;z-index:9999;
