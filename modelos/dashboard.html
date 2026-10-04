@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo: Dashboard Executivo — Kodex Soluções</title>
+<meta name="description" content="Experimente um dashboard executivo com KPIs, gráficos e simulador 'E se?'. Modelo de demonstração da Kodex Soluções.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Modelo: Dashboard Executivo — Kodex Soluções">
+<meta property="og:description" content="Experimente um dashboard executivo com KPIs, gráficos e simulador 'E se?'. Modelo de demonstração da Kodex Soluções.">
+<meta property="og:locale" content="pt_BR">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/modelos.css">
+<link rel="stylesheet" href="../css/modern.css">
+<link rel="stylesheet" href="../css/revision.css">
+<link rel="stylesheet" href="../css/claude-visual.css">
+</head>
+<body data-modelo="Dashboard executivo">
+<a class="skip-link" href="#demo-conteudo">Pular para a demonstração</a>
+
+<div class="demo-bar">
+  <div class="demo-bar-left">
+    <a href="../index.html#vitrine" class="demo-back">&larr; Voltar à Vitrine</a>
+    <span class="demo-flag">Modelo de demonstração: dados fictícios</span>
+  </div>
+  <div class="demo-bar-right">
+    <button class="demo-btn demo-btn--ghost" id="btn-restaurar">Restaurar demo</button>
+    <a class="demo-btn demo-btn--cta" id="btn-quero-assim" href="#">Quero um assim</a>
+  </div>
+</div>
+
+<main class="demo-shell" id="demo-conteudo">
+  <div class="dash-shell">
+
+    <div class="dash-toolbar">
+      <h1 style="font-size:1.3rem;margin:0;">Visão geral — PME Exemplo</h1>
+      <div class="period-group" role="group" aria-label="Selecionar período de análise">
+        <button data-periodo="7" aria-pressed="false">7 dias</button>
+        <button data-periodo="30" class="is-active" aria-pressed="true">30 dias</button>
+        <button data-periodo="90" aria-pressed="false">90 dias</button>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Faturamento</div>
+        <div class="kpi-value" id="kpi-faturamento">R$ 0</div>
+        <span class="kpi-delta" id="kpi-faturamento-delta"></span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Ticket médio</div>
+        <div class="kpi-value" id="kpi-ticket">R$ 0</div>
+        <span class="kpi-delta" id="kpi-ticket-delta"></span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Clientes novos</div>
+        <div class="kpi-value" id="kpi-clientes">0</div>
+        <span class="kpi-delta" id="kpi-clientes-delta"></span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Taxa de conversão</div>
+        <div class="kpi-value" id="kpi-conversao">0%</div>
+        <span class="kpi-delta" id="kpi-conversao-delta"></span>
+      </div>
+    </div>
+
+    <p id="chart-status" role="status" class="demo-hint"></p><details class="data-summary"><summary>Ver os dados dos gráficos em tabela</summary><div id="chart-data"></div></details><div class="chart-grid">
+      <div class="chart-card">
+        <h3>Faturamento no período</h3>
+        <canvas id="chart-linha" role="img" aria-label="Gráfico de linha do faturamento ao longo do período selecionado"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Origem dos clientes</h3>
+        <canvas id="chart-rosca" role="img" aria-label="Gráfico de rosca com a origem dos clientes"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>Vendas por canal</h3>
+        <canvas id="chart-barras" role="img" aria-label="Gráfico de barras de vendas por canal"></canvas>
+      </div>
+
+      <div class="simulator-card">
+        <h3>Simulador "E se?"</h3>
+        <p>Ajuste os parâmetros e veja a receita projetada mudar em tempo real.</p>
+
+        <div class="sim-field">
+          <label for="sim-ticket">Ticket médio <span id="sim-ticket-valor">R$ 350</span></label>
+          <input type="range" id="sim-ticket" min="100" max="2000" step="10" value="350">
+        </div>
+        <div class="sim-field">
+          <label for="sim-conversao">Taxa de conversão <span id="sim-conversao-valor">8%</span></label>
+          <input type="range" id="sim-conversao" min="1" max="40" step="1" value="8">
+        </div>
+        <div class="sim-field">
+          <label for="sim-leads">Número de leads <span id="sim-leads-valor">200</span></label>
+          <input type="range" id="sim-leads" min="10" max="2000" step="10" value="200">
+        </div>
+
+        <div class="sim-result">
+          <div class="sim-result-label">Receita projetada</div>
+          <div class="sim-result-value" id="sim-resultado" role="status" aria-live="polite">R$ 0</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="ficticio-note" style="text-align:center;margin-top:1rem;">Todos os números deste painel são fictícios e servem apenas para demonstração.</p>
+
+  </div>
+</main>
+
+<div class="demo-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
+<script src="../js/main.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="../js/experience.js"></script><script src="../js/claude-enhance.js"></script>
+</body>
+</html>

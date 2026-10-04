@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo: Sistema de Gestão (Mini-CRM) — Kodex Soluções</title>
+<meta name="description" content="Experimente um mini-CRM de vendas: arraste oportunidades entre etapas, cadastre clientes e exporte dados. Modelo de demonstração da Kodex Soluções.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Modelo: Sistema de Gestão (Mini-CRM) — Kodex Soluções">
+<meta property="og:description" content="Experimente um mini-CRM de vendas: arraste oportunidades entre etapas, cadastre clientes e exporte dados. Modelo de demonstração da Kodex Soluções.">
+<meta property="og:locale" content="pt_BR">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/modelos.css">
+<link rel="stylesheet" href="../css/modern.css">
+<link rel="stylesheet" href="../css/revision.css">
+<link rel="stylesheet" href="../css/claude-visual.css">
+</head>
+<body data-modelo="Sistema de gestão (mini-CRM)">
+<a class="skip-link" href="#demo-conteudo">Pular para a demonstração</a>
+
+<div class="demo-bar">
+  <div class="demo-bar-left">
+    <a href="../index.html#vitrine" class="demo-back">&larr; Voltar à Vitrine</a>
+    <span class="demo-flag">Modelo de demonstração: dados fictícios</span>
+  </div>
+  <div class="demo-bar-right">
+    <button class="demo-btn demo-btn--ghost" id="btn-restaurar">Restaurar demo</button>
+    <a class="demo-btn demo-btn--cta" id="btn-quero-assim" href="#">Quero um assim</a>
+  </div>
+</div>
+
+<main class="demo-shell" id="demo-conteudo">
+  <div class="crm-shell">
+
+    <div class="crm-toolbar">
+      <div class="crm-search">
+        <label for="crm-busca" class="visually-hidden">Buscar cliente ou empresa</label>
+        <input type="search" id="crm-busca" placeholder="Buscar por cliente ou empresa...">
+      </div>
+      <label class="crm-stage-label" for="crm-etapa-filtro">Etapa<select id="crm-etapa-filtro"><option value="todos">Todas</option><option value="novo">Novo contato</option><option value="proposta">Proposta</option><option value="negociacao">Negociação</option><option value="fechado">Fechado</option><option value="perdido">Perdido</option></select></label><div class="crm-toolbar-actions">
+        <button class="demo-btn demo-btn--ghost" id="btn-exportar-csv" style="background:var(--color-bg-alt);color:var(--color-primary);">Exportar CSV</button>
+        <button class="demo-btn demo-btn--cta" id="btn-novo-cliente">+ Novo cliente</button>
+      </div>
+    </div>
+
+    <h1 class="demo-heading">Seu funil de vendas</h1><p class="demo-hint">Dados fictícios. Arraste uma oportunidade ou use o seletor de etapa em cada cartão.</p><p id="crm-status" role="status"></p>
+<div class="kanban-board" id="kanban-board">
+      <div class="kanban-col" data-etapa="novo" style="--kanban-color:#2563EB;">
+        <div class="kanban-col-head"><h3>Novo contato</h3><span class="kanban-col-total" data-total="novo">R$ 0</span></div>
+        <div class="kanban-cards" data-coluna="novo"></div>
+      </div>
+      <div class="kanban-col" data-etapa="proposta" style="--kanban-color:#7C3AED;">
+        <div class="kanban-col-head"><h3>Proposta</h3><span class="kanban-col-total" data-total="proposta">R$ 0</span></div>
+        <div class="kanban-cards" data-coluna="proposta"></div>
+      </div>
+      <div class="kanban-col" data-etapa="negociacao" style="--kanban-color:#F89235;">
+        <div class="kanban-col-head"><h3>Negociação</h3><span class="kanban-col-total" data-total="negociacao">R$ 0</span></div>
+        <div class="kanban-cards" data-coluna="negociacao"></div>
+      </div>
+      <div class="kanban-col" data-etapa="fechado" style="--kanban-color:#059669;">
+        <div class="kanban-col-head"><h3>Fechado</h3><span class="kanban-col-total" data-total="fechado">R$ 0</span></div>
+        <div class="kanban-cards" data-coluna="fechado"></div>
+      </div>
+      <div class="kanban-col" data-etapa="perdido" style="--kanban-color:#DC2626;">
+        <div class="kanban-col-head"><h3>Perdido</h3><span class="kanban-col-total" data-total="perdido">R$ 0</span></div>
+        <div class="kanban-cards" data-coluna="perdido"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Modal de cadastro/edição -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <h2 id="modal-titulo">Novo cliente</h2>
+    <form id="form-cliente">
+      <input type="hidden" id="cliente-id">
+      <div class="editor-field">
+        <label for="cliente-nome">Nome do cliente</label>
+        <input type="text" id="cliente-nome" maxlength="80" required>
+      </div>
+      <div class="editor-field">
+        <label for="cliente-empresa">Empresa</label>
+        <input type="text" id="cliente-empresa" maxlength="100" required>
+      </div>
+      <div class="editor-field">
+        <label for="cliente-valor">Valor estimado (R$)</label>
+        <input type="number" id="cliente-valor" max="999999999" min="0" step="1" required>
+      </div>
+      <div class="editor-field">
+        <label for="cliente-acao">Próxima ação</label>
+        <input type="text" id="cliente-acao" maxlength="160" placeholder="Ex: ligar, enviar proposta...">
+      </div>
+      <div class="editor-field">
+        <label for="cliente-data">Data</label>
+        <input type="date" id="cliente-data" required>
+      </div>
+      <div class="editor-field">
+        <label for="cliente-etapa">Etapa</label>
+        <select id="cliente-etapa">
+          <option value="novo">Novo contato</option>
+          <option value="proposta">Proposta</option>
+          <option value="negociacao">Negociação</option>
+          <option value="fechado">Fechado</option>
+          <option value="perdido">Perdido</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="demo-btn demo-btn--ghost" id="btn-cancelar-modal" style="background:var(--color-bg-alt);color:var(--color-primary);">Cancelar</button>
+        <button type="submit" class="demo-btn demo-btn--cta">Salvar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="demo-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/main.js"></script>
+<script src="js/crm.js"></script>
+<script src="../js/experience.js"></script><script src="../js/claude-enhance.js"></script>
+</body>
+</html>

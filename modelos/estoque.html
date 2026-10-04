@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle de estoque — Kodex Soluções</title>
+<meta name="description" content="Modelo interativo com dados fictícios para experimentar possibilidades de um projeto digital.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Controle de estoque — Kodex Soluções">
+<meta property="og:description" content="Modelo interativo com dados fictícios para experimentar possibilidades de um projeto digital.">
+<meta property="og:locale" content="pt_BR">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/modelos.css">
+<link rel="stylesheet" href="../css/modern.css">
+<link rel="stylesheet" href="../css/revision.css">
+<link rel="stylesheet" href="../css/claude-visual.css">
+</head>
+<body data-modelo="Controle de estoque">
+<a class="skip-link" href="#demo-conteudo">Pular para a demonstração</a>
+
+<div class="demo-bar">
+  <div class="demo-bar-left">
+    <a href="../index.html#vitrine" class="demo-back">&larr; Voltar à Vitrine</a>
+    <span class="demo-flag">Modelo de demonstração: dados fictícios</span>
+  </div>
+  <div class="demo-bar-right">
+    <button class="demo-btn demo-btn--ghost" id="btn-restaurar">Restaurar demo</button>
+    <a class="demo-btn demo-btn--cta" id="btn-quero-assim" href="#">Quero um assim</a>
+  </div>
+</div>
+
+<main class="demo-shell" id="demo-conteudo"><div class="ops-page"><header class="ops-heading"><div><span class="section-eyebrow">Sistema demonstrativo</span><h1>Controle de estoque</h1><p>Use dados fictícios. Os registros ficam somente neste navegador.</p></div><button id="op-export" class="preview-btn">Exportar CSV</button></header><div class="metric-strip" id="op-metrics"></div><p class="ops-status" id="op-status" role="status" aria-live="polite"></p><div class="ops-layout"><aside class="ops-panel"><h2 id="op-form-title">Cadastrar produto</h2><form id="op-form" class="ops-form"><label for="op-name">Nome do produto<input id="op-name" name="name" type="text" required maxlength="80"></label><label for="op-sku">Código SKU<input id="op-sku" name="sku" type="text" required maxlength="80"></label><label for="op-category">Categoria<input id="op-category" name="category" type="text" required maxlength="80"></label><label for="op-stock">Saldo inicial<input id="op-stock" name="stock" type="number" required maxlength="80" min="0" max="1000000" step="1"></label><label for="op-min">Estoque mínimo<input id="op-min" name="min" type="number" required maxlength="80" min="0" max="1000000" step="1"></label><label for="op-price">Preço unitário (R$)<input id="op-price" name="price" type="number" required maxlength="80" min="0" max="1000000" step="0.01"></label><button class="btn btn-primary" type="submit">Salvar registro</button><button class="preview-btn" type="button" id="op-cancel">Cancelar edição</button></form></aside><section class="ops-panel"><div class="ops-toolbar"><label for="op-search">Buscar<input type="search" id="op-search" placeholder="Nome, SKU ou categoria"></label><label for="op-filter">Disponibilidade<select id="op-filter"><option value="todos">Todos os produtos</option><option value="baixo">Reposição necessária</option><option value="disponivel">Acima do mínimo</option></select></label></div><div class="ops-table-wrap"><table class="ops-table"><caption id="op-count">Registros da demonstração</caption><thead><tr><th scope="col">Produto / SKU</th><th scope="col">Saldo</th><th scope="col">Preço</th><th scope="col">Movimentação / ações</th></tr></thead><tbody id="op-rows"></tbody></table></div><div class="ops-log"><h2>Últimas movimentações</h2><ul id="op-log"></ul></div></section></div></div></main><div class="demo-toast" id="toast" role="status" aria-live="polite"></div><script src="../js/main.js"></script><script src="js/operations.js"></script><script src="js/estoque.js"></script><script src="../js/experience.js"></script><script src="../js/claude-enhance.js"></script></body></html>

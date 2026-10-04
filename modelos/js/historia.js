@@ -1,0 +1,1 @@
+document.getElementById('btn-restaurar').addEventListener('click',()=>{document.getElementById('demo-conteudo').scrollIntoView();const toast=document.getElementById('toast');toast.textContent='Página de história restaurada ao início.';toast.classList.add('is-visible');setTimeout(()=>toast.classList.remove('is-visible'),2400);});

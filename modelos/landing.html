@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo: Landing Page de Captação — Kodex Soluções</title>
+<meta name="description" content="Experimente uma landing page de captação de leads: personalize cores, textos e teste o formulário. Modelo de demonstração da Kodex Soluções.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Modelo: Landing Page de Captação — Kodex Soluções">
+<meta property="og:description" content="Experimente uma landing page de captação de leads: personalize cores, textos e teste o formulário. Modelo de demonstração da Kodex Soluções.">
+<meta property="og:locale" content="pt_BR">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="css/modelos.css">
+<link rel="stylesheet" href="../css/modern.css">
+<link rel="stylesheet" href="../css/revision.css">
+<link rel="stylesheet" href="../css/claude-visual.css">
+</head>
+<body data-modelo="Landing page de captação">
+<a class="skip-link" href="#demo-conteudo">Pular para a demonstração</a>
+
+<div class="demo-bar">
+  <div class="demo-bar-left">
+    <a href="../index.html#vitrine" class="demo-back">&larr; Voltar à Vitrine</a>
+    <span class="demo-flag">Modelo de demonstração: dados fictícios</span>
+  </div>
+  <div class="demo-bar-right">
+    <button class="demo-btn demo-btn--ghost" id="btn-restaurar">Restaurar demo</button>
+    <a class="demo-btn demo-btn--cta" id="btn-quero-assim" href="#">Quero um assim</a>
+  </div>
+</div>
+
+<main class="demo-shell" id="demo-conteudo">
+  <div class="landing-layout">
+
+    <!-- Painel de personalização -->
+    <aside class="editor-panel" aria-label="Personalize esta página">
+      <button type="button" class="editor-toggle" aria-expanded="true" aria-controls="editor-controls">Personalize esta página <span aria-hidden="true">−</span></button>
+<div id="editor-controls">
+
+      <div class="editor-field">
+        <label for="campo-titulo">Título do hero</label>
+        <input type="text" id="campo-titulo" maxlength="80">
+      </div>
+
+      <div class="editor-field">
+        <label for="campo-subtitulo">Subtítulo</label>
+        <textarea id="campo-subtitulo" maxlength="180"></textarea>
+      </div>
+
+      <div class="editor-field">
+        <label for="campo-botao">Texto do botão</label>
+        <input type="text" id="campo-botao" maxlength="30">
+      </div>
+
+      <div class="editor-field">
+        <label for="campo-cor">Cor principal</label>
+        <input type="color" id="campo-cor">
+      </div>
+
+      <div class="editor-field">
+        <label id="label-estilo">Estilo do hero</label>
+        <div class="style-options" role="group" aria-labelledby="label-estilo">
+          <button type="button" class="style-option" data-style="classic" aria-pressed="false">Clássico</button>
+          <button type="button" class="style-option" data-style="split" aria-pressed="false">Dividido</button>
+          <button type="button" class="style-option" data-style="minimal" aria-pressed="false">Minimalista</button>
+        </div>
+      </div>
+    </div>
+    </aside>
+
+    <!-- Preview ao vivo -->
+    <div class="landing-preview"><header class="lp-brand-bar"><div class="sample-logo"><span class="logo-slot">SUA LOGO</span><span>Consultoria Exemplo</span></div><a href="#form-lead">Fale com a equipe</a></header>
+
+      <section class="lp-hero style-classic" id="lp-hero">
+        <h1 id="preview-titulo">Consultoria que organiza as finanças da sua empresa</h1>
+        <p id="preview-subtitulo">Diagnóstico completo, plano de ação e acompanhamento mensal para você decidir com segurança.</p>
+        <a href="#form-lead" class="lp-cta-btn" id="preview-botao">Quero um diagnóstico gratuito</a>
+      </section>
+
+      <section class="lp-section">
+        <h2>Teste a captura de um contato</h2><p class="demo-hint">Use dados fictícios. O formulário simula o envio e não transmite seus contatos.</p>
+        <form class="lead-form" id="form-lead" novalidate>
+          <div>
+            <label for="lead-nome">Nome</label>
+            <input type="text" maxlength="80" autocomplete="off" aria-describedby="error-nome" id="lead-nome" name="nome" required>
+            <span class="field-error" id="error-nome" data-error-for="lead-nome">Informe seu nome.</span>
+          </div>
+          <div>
+            <label for="lead-whatsapp">WhatsApp</label>
+            <input type="tel" maxlength="25" autocomplete="off" aria-describedby="error-whatsapp" id="lead-whatsapp" name="whatsapp" required placeholder="(11) 99999-9999">
+            <span class="field-error" id="error-whatsapp" data-error-for="lead-whatsapp">Informe um WhatsApp válido.</span>
+          </div>
+          <div>
+            <label for="lead-email">E-mail</label>
+            <input type="email" maxlength="120" autocomplete="off" aria-describedby="error-email" id="lead-email" name="email" required>
+            <span class="field-error" id="error-email" data-error-for="lead-email">Informe um e-mail válido.</span>
+          </div>
+          <button type="submit" class="demo-btn demo-btn--cta" style="justify-content:center;">Quero meu diagnóstico</button>
+          <div class="lead-success" id="lead-success" role="status">Lead capturado! Em um projeto real, esse contato chegaria direto para sua equipe.</div>
+          <div class="lead-counter">Leads capturados nesta demo: <strong id="lead-count">0</strong></div>
+        </form>
+      </section>
+
+      <section class="lp-section" style="background:var(--color-bg-alt);">
+        <h2>Oferta por tempo limitado</h2>
+        <div class="countdown" id="countdown" aria-label="Tempo restante na oferta fictícia">
+          <div class="countdown-box"><strong id="cd-horas">00</strong><span>Horas</span></div>
+          <div class="countdown-box"><strong id="cd-min">00</strong><span>Min</span></div>
+          <div class="countdown-box"><strong id="cd-seg">00</strong><span>Seg</span></div>
+        </div>
+        <p style="text-align:center;" class="ficticio-note">Contador ilustrativo — nenhuma oferta real está em andamento nesta demonstração.</p>
+      </section>
+
+      <section class="lp-section">
+        <h2>O que dizem os clientes</h2>
+        <div class="proof-grid">
+          <div class="proof-card">"O diagnóstico mudou a forma como eu via as finanças do negócio." <span class="proof-name">Depoimento fictício — Empresa A</span></div>
+          <div class="proof-card">"Em poucas semanas já tínhamos um plano claro para seguir." <span class="proof-name">Depoimento fictício — Empresa B</span></div>
+          <div class="proof-card">"Atendimento direto e sem enrolação." <span class="proof-name">Depoimento fictício — Empresa C</span></div>
+        </div>
+        <p class="ficticio-note">Todos os depoimentos acima são fictícios e servem apenas para ilustrar o layout.</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<div class="demo-toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/main.js"></script>
+<script src="js/landing.js"></script>
+<script src="../js/experience.js"></script><script src="../js/claude-enhance.js"></script>
+</body>
+</html>

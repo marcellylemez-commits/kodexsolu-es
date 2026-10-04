@@ -1,0 +1,79 @@
+(function () {
+  const models = [
+    {id:'landing',category:'landing',name:'Landing page de captação',route:'landing',goal:'Divulgar uma oferta e captar contatos',features:['Textos, cor e estilos ao vivo','Presets de serviço, curso e evento','Formulário com validação e contador']},
+    {id:'institucional',category:'institucional',name:'Site institucional empresarial',route:'institucional',goal:'Apresentar sua empresa e seus serviços',features:['Logo e capa com fotografia','História, missão, visão e valores','Cores, textos e seções editáveis']},
+    {id:'pessoal',category:'institucional',name:'Site pessoal e portfólio',route:'pessoal',goal:'Apresentar você, seus serviços e seu trabalho',features:['Foto de perfil e apresentação','Sobre mim e serviços','Galeria com filtros e ampliação']},
+    {id:'recrutamento',category:'sistema',name:'Recrutamento e seleção',route:'recrutamento',goal:'Organizar candidatos e etapas de seleção',features:['Cadastro e edição de candidatos','Etapas, busca e filtro por vaga','Indicadores e exportação CSV']},
+    {id:'estoque',category:'sistema',name:'Controle de estoque',route:'estoque',goal:'Acompanhar produtos, entradas e saídas',features:['Cadastro e edição de produtos','Movimentações e saldo validado','Alertas de reposição e CSV']},
+    {id:'crm',category:'sistema',name:'Sistema de gestão (mini-CRM)',route:'crm',goal:'Organizar oportunidades e acompanhar vendas',features:['Quadro e tabela com ações','Busca, filtro, ordenação e indicadores','Cadastro, edição, etapas e CSV']},
+    {id:'dashboard',category:'dashboard',name:'Dashboard executivo',route:'dashboard',goal:'Explorar indicadores e simular cenários',features:['Gráficos e períodos de análise','Simulador com três parâmetros','Exportação dos indicadores em CSV']}
+  ];
+  const filter = (term,category) => models.filter(m => (category === 'todos' || m.category === category) && (m.name+' '+m.goal+' '+m.features.join(' ')).toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(term.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'')));
+  window.KodexCatalog = {models,filter};
+  function element(tag, className, text) { const el=document.createElement(tag); if(className)el.className=className; if(text)el.textContent=text; return el; }
+  function button(text,fn,className='preview-btn') { const b=element('button',className,text);b.type='button';b.addEventListener('click',fn);return b; }
+  function downloadCSV(rows,name) { const safe=v=>{let s=String(v);if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};const blob=new Blob(['\ufeff'+rows.map(r=>r.map(safe).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=element('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000); }
+  document.addEventListener('DOMContentLoaded', () => {
+    const progress=element('div','scroll-progress');progress.setAttribute('aria-hidden','true');document.body.appendChild(progress);
+    const scroll=()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.setProperty('--progress',(max>0?scrollY/max*100:0)+'%');};scroll();addEventListener('scroll',scroll,{passive:true});
+    const lab=document.getElementById('hero-lab');
+    if(lab) {
+      const screen=lab.querySelector('.lab-screen'), tabs=lab.querySelector('.lab-tabs');
+      const render=id=>{const m=models.find(m=>m.id===id);screen.replaceChildren(element('h2','',m.name),element('p','',m.goal));const pills=element('div','lab-pills');m.features.forEach(f=>pills.appendChild(element('span','',f)));screen.appendChild(pills);lab.querySelector('.lab-bottom a').href='modelos/'+m.route+'.html';tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.model===id)));};
+      models.forEach(m=>{const b=button(({crm:'CRM',institucional:'Empresa',landing:'Landing',dashboard:'Dashboard',pessoal:'Portfólio',recrutamento:'Seleção',estoque:'Estoque'})[m.id],()=>render(m.id));b.dataset.model=m.id;tabs.appendChild(b);});render('landing');
+    }
+    if(document.getElementById('vitrine')) setupCatalog();
+    if(document.body.dataset.modelo) setupDemo();
+  });
+  function setupCatalog() {
+    const grid=document.querySelector('.vitrine-grid'), filters=document.querySelector('.vitrine-filters');
+    const toolbar=element('div','catalog-toolbar');const searchLabel=element('label','catalog-search','Encontre uma experiência para o seu negócio');const input=element('input');input.type='search';input.placeholder='Busque por site, contatos, vendas ou indicadores';searchLabel.appendChild(input);toolbar.appendChild(searchLabel);
+    const controls=element('div','catalog-controls');const grade=button('Grade',()=>view(false));const list=button('Lista',()=>view(true));const compare=button('Comparar modelos (0)',()=>openCompare(),'preview-btn comparison-launch');compare.disabled=true;controls.append(grade,list,compare);toolbar.appendChild(controls);toolbar.appendChild(element('p','catalog-hint','Abra uma prévia para testar sem sair daqui. Selecione dois ou mais modelos para comparar.'));filters.before(toolbar);
+    let category='todos';const selected=new Set();
+    const empty=element('p','catalog-empty','Nenhum modelo encontrado. Tente outra busca ou selecione Todos.');empty.hidden=true;grid.after(empty);
+    function view(isList){grid.classList.toggle('is-list',isList);grade.setAttribute('aria-pressed',String(!isList));list.setAttribute('aria-pressed',String(isList));}view(false);
+    function update(){const valid=filter(input.value.trim(),category).map(m=>m.id);document.querySelectorAll('.vitrine-card').forEach(c=>c.hidden=!valid.includes(c.dataset.model));empty.hidden=valid.length!==0;document.getElementById('filter-status').textContent=`${valid.length} experiência${valid.length===1?'':'s'} disponível${valid.length===1?'':'is'}. Personalize e teste os controles de cada modelo.`;}
+    input.addEventListener('input',update);
+    filters.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{category=b.dataset.filter;filters.querySelectorAll('button').forEach(x=>{x.classList.toggle('is-active',x===b);x.setAttribute('aria-pressed',String(x===b));});update();}));
+    models.forEach(m=>{
+      const card=document.querySelector(`.vitrine-card[data-model="${m.id}"]`);const body=card.querySelector('.vitrine-body');
+      card.querySelector('.vitrine-niche').textContent=m.goal+' • Demonstração fictícia';
+      const ul=card.querySelector('.vitrine-tests');ul.replaceChildren();m.features.forEach(f=>ul.appendChild(element('li','',f)));
+      const launch=body.querySelector('a');launch.textContent='Abrir experiência';const actions=element('div','card-actions');actions.appendChild(button('Prévia ao vivo',()=>openPreview(m)));actions.appendChild(launch);body.appendChild(actions);
+      const label=element('label','compare-choice');const choice=element('input');choice.type='checkbox';choice.setAttribute('aria-label','Comparar '+m.name);label.append(choice,document.createTextNode('Adicionar à comparação'));choice.addEventListener('change',()=>{choice.checked?selected.add(m.id):selected.delete(m.id);compare.textContent=`Comparar modelos (${selected.size})`;compare.disabled=selected.size<2;});body.appendChild(label);
+    });
+    function dialog(title) {const d=element('dialog','experience-dialog');const header=element('header');const h=element('h2','',title);h.id='experience-title';d.setAttribute('aria-labelledby',h.id);header.appendChild(h);header.appendChild(button('Fechar',()=>d.close(),'close-dialog'));d.appendChild(header);document.body.appendChild(d);d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d)d.close();});return d;}
+    function openPreview(m) {
+      const d=dialog(m.name), tools=element('div','preview-tools');const frame=element('iframe','experience-frame');frame.dataset.livePreview='';frame.title='Prévia interativa: '+m.name;frame.src='modelos/'+m.route+'.html';
+      const desk=button('Desktop',()=>setView(false)),phone=button('Celular',()=>setView(true));function setView(mobile){frame.classList.toggle('is-phone',mobile);desk.setAttribute('aria-pressed',String(!mobile));phone.setAttribute('aria-pressed',String(mobile));}setView(false);
+      const open=element('a','','Abrir página completa');open.href=frame.src;tools.append(desk,phone,open);d.querySelector('header').insertBefore(tools,d.querySelector('.close-dialog'));d.appendChild(frame);frame.addEventListener('load',()=>frame.contentWindow?.postMessage({type:'kodex-theme',theme:KodexTheme.current()},'*'));d.showModal();
+    }
+    function openCompare(){const d=dialog('Qual modelo combina com seu objetivo?');const content=element('div','comparison-grid');models.filter(m=>selected.has(m.id)).forEach(m=>{const c=element('article','comparison-model');c.append(element('h3','',m.name),element('p','',m.goal));const ul=element('ul');m.features.forEach(f=>ul.appendChild(element('li','',f)));c.appendChild(ul);c.appendChild(button('Testar este modelo',()=>{d.close();openPreview(m);}));content.appendChild(c);});d.appendChild(content);d.showModal();}
+    update();
+  }
+  function setupDemo() {
+    if(document.getElementById('inst-frame')) {
+      const bar=element('div','demo-extra');const name=element('label','','Nome da empresa');const title=element('label','','Título da apresentação');const n=element('input'),t=element('input');n.maxLength=60;t.maxLength=100;
+      const defaults={name:'Contábil Exemplo',title:'Contabilidade clara para sua empresa crescer com segurança'};const state=DemoStorage.read('kodex-inst-copy',defaults,s=>s&&typeof s.name==='string'&&typeof s.title==='string');
+      const render=()=>{n.value=state.name;t.value=state.title;document.querySelector('.inst-header strong').textContent=state.name;document.querySelector('.inst-hero h1').textContent=state.title;};
+      n.addEventListener('input',()=>{state.name=n.value;document.querySelector('.inst-header strong').textContent=state.name;DemoStorage.write('kodex-inst-copy',state);});t.addEventListener('input',()=>{state.title=t.value;document.querySelector('.inst-hero h1').textContent=state.title;DemoStorage.write('kodex-inst-copy',state);});name.appendChild(n);title.appendChild(t);bar.append(name,title);document.querySelector('.inst-frame-wrap').before(bar);bar.style.maxWidth='1250px';bar.style.marginInline='auto';render();document.getElementById('btn-restaurar').addEventListener('click',()=>{Object.assign(state,defaults);DemoStorage.write('kodex-inst-copy',state);render();});
+    }
+    if(document.getElementById('lp-hero')) {
+      const presets={servico:['Consultoria que organiza as finanças da sua empresa','Uma demonstração de oferta de serviço, com foco em captar contatos.','Quero saber mais'],curso:['Seu próximo aprendizado começa aqui','Apresente o conteúdo de um curso fictício e receba interessados.','Quero conhecer o curso'],evento:['Um encontro para tirar ideias do papel','Divulgue um evento fictício e facilite o cadastro dos participantes.','Quero participar']};
+      const label=element('label','editor-field','Comece por um modelo de oferta');const select=element('select');select.setAttribute('aria-label','Modelo de oferta');select.appendChild(new Option('Escolha um exemplo',''));for(const [id,text]of Object.entries({servico:'Serviço',curso:'Curso',evento:'Evento'}))select.appendChild(new Option(text,id));label.appendChild(select);document.getElementById('editor-controls').prepend(label);
+      select.addEventListener('change',()=>{if(!presets[select.value])return;['campo-titulo','campo-subtitulo','campo-botao'].forEach((id,i)=>{const el=document.getElementById(id);el.value=presets[select.value][i];el.dispatchEvent(new Event('input',{bubbles:true}));});});document.getElementById('btn-restaurar').addEventListener('click',()=>select.value='');
+    }
+    if(document.getElementById('kanban-board')) {
+      const bar=element('div','demo-extra');bar.append(button('Quadro',()=>setView(false)),button('Tabela',()=>setView(true)));const label=element('label','','Ordenar oportunidades');const select=element('select');select.append(new Option('Nome','nome'),new Option('Maior valor','valor'),new Option('Próxima data','data'));label.appendChild(select);bar.appendChild(label);document.querySelector('.crm-toolbar').after(bar);
+      const metrics=element('div','metric-strip');bar.after(metrics);const wrap=element('div','crm-table-wrap');wrap.hidden=true;document.getElementById('kanban-board').after(wrap);
+      let tableView=false;function setView(table){tableView=table;document.getElementById('kanban-board').hidden=table;wrap.hidden=!table;bar.querySelectorAll('button').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===(table?1:0))));render();}
+      function render(){if(!window.KodexCRM)return;const rows=KodexCRM.list().slice().sort((a,b)=>select.value==='valor'?b.valor-a.valor:select.value==='data'?a.data.localeCompare(b.data):a.nome.localeCompare(b.nome,'pt-BR'));metrics.replaceChildren();const cash=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});[['Oportunidades',rows.length],['Em aberto',cash(rows.filter(r=>!['fechado','perdido'].includes(r.etapa)).reduce((s,r)=>s+r.valor,0))],['Fechado',cash(rows.filter(r=>r.etapa==='fechado').reduce((s,r)=>s+r.valor,0))]].forEach(([name,value])=>{const c=element('div');c.append(element('span','',name),element('strong','',String(value)));metrics.appendChild(c);});
+        wrap.replaceChildren();const table=element('table','crm-table');const caption=table.createCaption();caption.textContent='Oportunidades da demonstração';const header=table.createTHead().insertRow();['Cliente','Valor','Etapa','Ações'].forEach(text=>{const th=element('th','',text);th.scope='col';header.appendChild(th);});const body=table.createTBody();rows.forEach(r=>{const row=body.insertRow();row.insertCell().textContent=r.nome+' · '+r.empresa;row.insertCell().textContent=cash(r.valor);const stages=element('select','kc-move-select');stages.setAttribute('aria-label','Etapa de '+r.nome);KodexCRM.stages.forEach(s=>stages.appendChild(new Option(s.label,s.id)));stages.value=r.etapa;stages.addEventListener('change',()=>{const chosen=stages.value;KodexCRM.move(r.id,chosen);render();const replacement=Array.from(wrap.querySelectorAll('select')).find(s=>s.getAttribute('aria-label')==='Etapa de '+r.nome);if(replacement)replacement.focus();else document.getElementById('crm-etapa-filtro').focus();});row.insertCell().appendChild(stages);row.insertCell().append(button('Editar',()=>KodexCRM.edit(r.id),'kc-btn'),button('Excluir',()=>KodexCRM.remove(r.id),'kc-btn'));});if(!rows.length){const row=body.insertRow();const td=row.insertCell();td.colSpan=4;td.textContent='Nenhuma oportunidade para estes filtros.';}wrap.appendChild(table);
+      }
+      select.addEventListener('change',()=>KodexCRM.sort(select.value));addEventListener('kodex:crm-update',render);setView(false);document.getElementById('btn-restaurar').addEventListener('click',()=>{select.value='nome';KodexCRM.sort('nome');setView(false);});
+    }
+    if(document.getElementById('sim-ticket')) {
+      const bar=element('div','demo-extra');bar.appendChild(element('p','','Os dados são fictícios. Explore cenários e leve os indicadores em CSV.'));bar.appendChild(button('Exportar indicadores',()=>{const rows=[['Indicador','Valor']];document.querySelectorAll('.kpi-card').forEach(c=>rows.push([c.querySelector('.kpi-label').textContent,c.querySelector('.kpi-value').textContent]));rows.push(['Receita simulada',document.getElementById('sim-resultado').textContent]);downloadCSV(rows,'kodex-dashboard-demo.csv');}));document.querySelector('.dash-toolbar').after(bar);
+    }
+  }
+})();
